@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}RoadSafe | Live Hazard Map{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+{% endblock %}
+{% block content %}
+<section class="map-page">
+    <div class="map-header">
+        <div>
+            <div class="eyebrow"><span class="pulse"></span> LIVE ROAD MONITOR</div>
+            <h1>Hazard <span>map.</span></h1>
+            <p>Explore reported road problems, severity and current status.</p>
+        </div>
+        <a href="{{ url_for('report') }}" class="btn btn-primary">+ Report Hazard</a>
+    </div>
+    <div class="map-wrapper">
+        <div id="map" aria-label="Road safety map"></div>
+        <div class="map-filter">
+            <span>FILTER</span>
+            <label><input type="checkbox" data-type="critical" checked> <i class="dot red"></i> Critical</label>
+            <label><input type="checkbox" data-type="high" checked> <i class="dot orange"></i> High</label>
+            <label><input type="checkbox" data-type="medium" checked> <i class="dot blue"></i> Medium</label>
+            <label><input type="checkbox" data-type="low" checked> <i class="dot green"></i> Low</label>
+        </div>
+        <div class="map-info"><strong data-map-total>{{ reports|length }}</strong><span>reported hazards</span></div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>window.ROADSAFE_REPORTS = {{ reports_json|tojson }};</script>
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}

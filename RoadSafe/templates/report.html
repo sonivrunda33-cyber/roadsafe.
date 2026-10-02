@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% block title %}
+RoadSafe | Report Issue
+{% endblock %}
+
+
+{% block css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/report.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="report-page">
+
+    <div class="report-header">
+
+        <span class="eyebrow">
+            MAKE A DIFFERENCE
+        </span>
+
+        <h1>
+            Report a Road Issue
+        </h1>
+
+        <p>
+            Tell us what you found. Your report can help
+            make roads safer for everyone.
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('report') }}"
+        enctype="multipart/form-data"
+        class="report-form"
+    >
+
+        <!-- Title -->
+
+        <div class="form-group">
+
+            <label for="title">
+                Issue Title
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Example: Large pothole near main road"
+                required
+            >
+
+        </div>
+
+
+        <!-- Category -->
+
+        <div class="form-group">
+
+            <label for="category">
+                Category
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                required
+            >
+
+                <option value="">
+                    Select issue type
+                </option>
+
+                <option value="Pothole">
+                    🕳️ Pothole
+                </option>
+
+                <option value="Road Damage">
+                    🚧 Road Damage
+                </option>
+
+                <option value="Street Light">
+                    💡 Street Light
+                </option>
+
+                <option value="Traffic Signal">
+                    🚦 Traffic Signal
+                </option>
+
+                <option value="Water Logging">
+                    💧 Water Logging
+                </option>
+
+                <option value="Garbage">
+                    🗑️ Garbage
+                </option>
+
+                <option value="Broken Divider">
+                    🧱 Broken Divider
+                </option>
+
+                <option value="Illegal Parking">
+                    🚗 Illegal Parking
+                </option>
+
+                <option value="Accident">
+                    ⚠️ Accident
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Severity -->
+
+        <div class="form-group">
+
+            <label for="severity">
+                Severity
+            </label>
+
+            <select
+                id="severity"
+                name="severity"
+                required
+            >
+
+                <option value="">
+                    Select severity
+                </option>
+
+                <option value="low">
+                    Low
+                </option>
+
+                <option value="medium">
+                    Medium
+                </option>
+
+                <option value="high">
+                    High
+                </option>
+
+                <option value="critical">
+                    Critical
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Description -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                rows="6"
+                placeholder="Describe the issue..."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <!-- Location -->
+
+        <div class="location-section">
+
+            <div class="location-header">
+
+                <div>
+
+                    <h3>
+                        Location
+                    </h3>
+
+                    <p>
+                        Select where the problem is located.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="getLocation"
+                    class="location-btn"
+                >
+                    📍 Use My Location
+                </button>
+
+            </div>
+
+
+            <div class="location-grid">
+
+                <div class="form-group">
+
+                    <label for="latitude">
+                        Latitude
+                    </label>
+
+                    <input
+                        type="number"
+                        step="any"
+                        id="latitude"
+                        name="latitude"
+                        placeholder="22.3072"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="longitude">
+                        Longitude
+                    </label>
+
+                    <input
+                        type="number"
+                        step="any"
+                        id="longitude"
+                        name="longitude"
+                        placeholder="73.1812"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Address -->
+
+        <div class="form-group">
+
+            <label for="address">
+                Address
+            </label>
+
+            <input
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Street / area / landmark"
+            >
+
+        </div>
+
+
+        <!-- Image -->
+
+        <div class="form-group">
+
+            <label for="image">
+                Upload Photo
+            </label>
+
+            <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/png,image/jpeg,image/webp"
+            >
+
+            <small>
+                JPG, PNG or WEBP · Maximum 10MB
+            </small>
+
+        </div>
+
+
+        <!-- Submit -->
+
+        <button
+            type="submit"
+            class="submit-report-btn"
+        >
+            Submit Report
+            <span>→</span>
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}
+
+
+{% block js %}
+
+<script
+    src="{{ url_for('static', filename='js/report.js') }}"
+></script>
+
+{% endblock %}

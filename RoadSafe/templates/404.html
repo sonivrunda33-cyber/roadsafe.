@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+RoadSafe | 404
+{% endblock %}
+
+
+{% block content %}
+
+<section class="error-page">
+
+    <div class="error-content">
+
+        <span class="error-code">
+            404
+        </span>
+
+        <h1>
+            Road not found.
+        </h1>
+
+        <p>
+            Looks like you've taken a wrong turn.
+            This page doesn't exist.
+        </p>
+
+
+        <div class="error-actions">
+
+            <a
+                href="{{ url_for('index') }}"
+                class="btn btn-primary"
+            >
+                ← Back Home
+            </a>
+
+            <a
+                href="{{ url_for('map_page') }}"
+                class="btn btn-secondary"
+            >
+                Explore Map
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

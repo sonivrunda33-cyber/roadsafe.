@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}
+Report #{{ report.id }} — RoadSafe
+{% endblock %}
+
+
+{% block content %}
+
+<section class="issue-page section-container">
+
+
+    <a
+        href="{{ url_for('map_page') }}"
+        class="back-link">
+
+        ← Back to map
+
+    </a>
+
+
+
+    <div class="issue-layout">
+
+
+        <!-- MAIN -->
+        <div class="issue-main">
+
+
+            <div class="eyebrow">
+                REPORT #{{ report.id }}
+            </div>
+
+
+            <h1>
+                {{ report.title }}
+            </h1>
+
+
+            <div class="issue-meta">
+
+                <span>
+                    {{ report.category }}
+                </span>
+
+                <span>
+                    {{ report.severity }}
+                </span>
+
+                <span>
+                    {{ report.status }}
+                </span>
+
+            </div>
+
+
+
+            {% if report.image %}
+
+            <div class="issue-image-wrapper">
+
+                <img
+                    src="{{ url_for('uploaded_file', filename=report.image) }}"
+                    class="issue-image"
+                    alt="Road hazard">
+
+            </div>
+
+            {% endif %}
+
+
+
+            <div class="issue-description">
+
+                <div class="section-label">
+                    DESCRIPTION
+                </div>
+
+                <h2>
+                    What was reported
+                </h2>
+
+                <p>
+                    {{ report.description or
+                    "No description was provided." }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SIDEBAR -->
+        <aside class="issue-sidebar">
+
+
+            <div class="side-card">
+
+                <div class="side-card-icon">
+                    ⌖
+                </div>
+
+                <span class="section-label">
+                    LOCATION
+                </span>
+
+                <h3>
+                    {{ report.address or
+                    "Reported location" }}
+                </h3>
+
+                <p>
+                    Latitude:
+                    {{ report.latitude }}
+                    <br>
+
+                    Longitude:
+                    {{ report.longitude }}
+                </p>
+
+            </div>
+
+
+
+            <div class="side-card">
+
+                <span class="section-label">
+                    UPDATE STATUS
+                </span>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'update_status',
+                        report_id=report.id
+                    ) }}">
+
+
+                    <select name="status">
+
+                        <option
+                            {% if report.status == "Reported" %}
+                            selected
+                            {% endif %}>
+                            Reported
+                        </option>
+
+                        <option
+                            {% if report.status == "Verified" %}
+                            selected
+                            {% endif %}>
+                            Verified
+                        </option>
+
+                        <option
+                            {% if report.status == "Assigned" %}
+                            selected
+                            {% endif %}>
+                            Assigned
+                        </option>
+
+                        <option
+                            {% if report.status == "In Progress" %}
+                            selected
+                            {% endif %}>
+                            In Progress
+                        </option>
+
+                        <option
+                            {% if report.status == "Resolved" %}
+                            selected
+                            {% endif %}>
+                            Resolved
+                        </option>
+
+                    </select>
+
+
+                    <textarea
+                        name="message"
+                        rows="4"
+                        placeholder="Write an update..."></textarea>
+
+
+                    <button
+                        class="submit-button"
+                        type="submit">
+
+                        Update Status
+                        <b>↗</b>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </aside>
+
+    </div>
+
+
+
+    <!-- TIMELINE -->
+    <div class="timeline-section">
+
+        <div class="section-label">
+            HISTORY
+        </div>
+
+        <h2>
+            Report timeline
+        </h2>
+
+
+        <div class="timeline">
+
+
+            {% for update in updates %}
+
+
+            <div class="timeline-item">
+
+
+                <div class="timeline-marker">
+
+                    <span></span>
+
+                </div>
+
+
+                <div class="timeline-content">
+
+                    <div>
+
+                        <strong>
+                            {{ update.status }}
+                        </strong>
+
+                        <time>
+                            {{ update.updated_at }}
+                        </time>
+
+                    </div>
+
+
+                    <p>
+                        {{ update.message }}
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}RoadSafe | Safer Roads Start Here{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">{% endblock %}
+{% block content %}
+<section class="rs-hero">
+    <div class="rs-hero-bg"></div><div class="rs-grid"></div>
+    <div class="rs-hero-content">
+        <div class="rs-eyebrow"><span class="rs-pulse"></span> LIVE ROAD SAFETY PLATFORM</div>
+        <h1>Safer roads.<br><span>Smarter action.</span></h1>
+        <p class="rs-hero-text">Spot a pothole, broken streetlight, waterlogging or another road hazard. Report it in seconds, pin the exact location, and track what happens next.</p>
+        <div class="rs-buttons">
+            <a href="{{ url_for('report') }}" class="rs-btn rs-btn-primary">Report an issue <span>→</span></a>
+            <a href="{{ url_for('map_page') }}" class="rs-btn rs-btn-secondary">Explore live map</a>
+        </div>
+    </div>
+    <div class="rs-floating-map">
+        <div class="rs-map-head"><span>ROAD MONITOR</span><span class="rs-live">● LIVE</span></div>
+        <div class="rs-mini-map">
+            <div class="rs-road rs-road-1"></div><div class="rs-road rs-road-2"></div><div class="rs-road rs-road-3"></div>
+            <div class="rs-pin rs-pin-a red">!</div><div class="rs-pin rs-pin-b orange">!</div><div class="rs-pin rs-pin-c green">✓</div>
+        </div>
+        <div class="rs-map-footer">
+            <div><strong>{{ stats.total|default(0) }}</strong><small>reported hazards</small></div>
+            <div><strong>{{ stats.resolved|default(0) }}</strong><small>resolved</small></div>
+        </div>
+    </div>
+</section>
+<section class="rs-stats"><div class="rs-container"><div class="rs-stats-grid">
+    <div class="rs-stat"><strong class="rs-stat-number">{{ stats.total|default(0) }}</strong><span class="rs-stat-label">Total reports</span></div>
+    <div class="rs-stat"><strong class="rs-stat-number">{{ stats.open|default(0) }}</strong><span class="rs-stat-label">Open issues</span></div>
+    <div class="rs-stat"><strong class="rs-stat-number">{{ stats.in_progress|default(0) }}</strong><span class="rs-stat-label">In progress</span></div>
+    <div class="rs-stat"><strong class="rs-stat-number">{{ stats.resolved|default(0) }}</strong><span class="rs-stat-label">Resolved</span></div>
+</div></div></section>
+<section class="rs-features"><div class="rs-container">
+    <div class="rs-section-head"><div class="rs-section-label">HOW ROADSAFE WORKS</div><h2>From road problem to <span>real action.</span></h2><p>A simple reporting flow designed around location, evidence and transparent status.</p></div>
+    <div class="rs-feature-grid">
+        <article class="rs-feature rs-reveal"><div class="rs-feature-icon">📍</div><h3>Pin the problem</h3><p>Capture the exact latitude and longitude so the issue can be found quickly.</p><span class="rs-feature-arrow">↗</span></article>
+        <article class="rs-feature rs-reveal"><div class="rs-feature-icon">📷</div><h3>Add evidence</h3><p>Attach a clear photo and describe the road condition with useful details.</p><span class="rs-feature-arrow">↗</span></article>
+        <article class="rs-feature rs-reveal"><div class="rs-feature-icon">🗺️</div><h3>See the map</h3><p>Explore reported hazards and understand where problems are concentrated.</p><span class="rs-feature-arrow">↗</span></article>
+        <article class="rs-feature rs-reveal"><div class="rs-feature-icon">✓</div><h3>Track progress</h3><p>Follow report status from Open through review, progress and resolution.</p><span class="rs-feature-arrow">↗</span></article>
+    </div>
+</div></section>
+{% endblock %}

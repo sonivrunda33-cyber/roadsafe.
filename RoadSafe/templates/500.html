@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}RoadSafe | Server Error{% endblock %}
+{% block content %}
+<section class="error-page">
+  <div class="error-content">
+    <span class="error-code">500</span>
+    <h1>Something went wrong.</h1>
+    <p>The server could not complete your request. Please try again.</p>
+    <div class="error-actions">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">← Back Home</a>
+      <a href="{{ url_for('map_page') }}" class="btn btn-secondary">Explore Map</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

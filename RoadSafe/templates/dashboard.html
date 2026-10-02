@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}
+RoadSafe | Dashboard
+{% endblock %}
+
+
+{% block css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/dashboard.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <span class="eyebrow">
+                ROADSAVE
+            </span>
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <p>
+                Monitor road safety reports and their progress.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('report') }}"
+            class="btn btn-primary"
+        >
+            + Report Issue
+        </a>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat">
+
+            <span>
+                Total Reports
+            </span>
+
+            <strong>
+                {{ stats.total|default(0) }}
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-stat">
+
+            <span>
+                Open
+            </span>
+
+            <strong>
+                {{ stats.open|default(0) }}
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-stat">
+
+            <span>
+                In Progress
+            </span>
+
+            <strong>
+                {{ stats.in_progress|default(0) }}
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-stat">
+
+            <span>
+                Resolved
+            </span>
+
+            <strong>
+                {{ stats.resolved|default(0) }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- Reports -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    Recent Reports
+                </h2>
+
+                <p>
+                    Latest road safety reports.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('map_page') }}"
+            >
+                View Map →
+            </a>
+
+        </div>
+
+
+        {% if reports %}
+
+        <div class="report-list">
+
+            {% for report in reports %}
+
+            <div class="report-item">
+
+                <div class="report-icon">
+                    {% if report.category == "Pothole" %}
+                        🕳️
+                    {% elif report.category == "Street Light" %}
+                        💡
+                    {% elif report.category == "Traffic Signal" %}
+                        🚦
+                    {% elif report.category == "Garbage" %}
+                        🗑️
+                    {% else %}
+                        🚧
+                    {% endif %}
+                </div>
+
+
+                <div class="report-info">
+
+                    <h3>
+                        {{ report.title }}
+                    </h3>
+
+                    <p>
+                        {{ report.category }}
+                        ·
+                        {{ report.address or "Location available" }}
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="status status-{{ report.status|lower|replace(' ', '-') }}"
+                >
+                    {{ report.status }}
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div>
+                📍
+            </div>
+
+            <h3>
+                No reports yet
+            </h3>
+
+            <p>
+                Be the first person to report a road issue.
+            </p>
+
+            <a
+                href="{{ url_for('report') }}"
+                class="btn btn-primary"
+            >
+                Create Report
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

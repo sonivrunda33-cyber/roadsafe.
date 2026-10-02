@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#060809">
+    <meta name="description" content="RoadSafe — report and track road safety problems.">
+    <title>{% block title %}RoadSafe{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    {% block css %}{% endblock %}
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="page-glow" aria-hidden="true"></div>
+
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" aria-label="RoadSafe home">
+                <span class="logo-mark">🚦</span>
+                <span>ROAD<span>SAFE</span></span>
+            </a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('map_page') }}">Map</a>
+                <a href="{{ url_for('report') }}">Report</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                {% if session.get('user_id') %}
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                    <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}" class="nav-button">Get Started <span>↗</span></a>
+                {% endif %}
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+        </div>
+
+        <div class="mobile-nav" id="mobileNav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('map_page') }}">Map</a>
+            <a href="{{ url_for('report') }}">Report</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('profile') }}">Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Get Started</a>
+            {% endif %}
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <a href="{{ url_for('index') }}" class="logo">
+                    <span class="logo-mark">🚦</span>
+                    <span>ROAD<span>SAFE</span></span>
+                </a>
+                <p>Report it. Track it. Make roads safer.</p>
+            </div>
+            <div class="footer-links">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('map_page') }}">Map</a>
+                <a href="{{ url_for('report') }}">Report</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© {{ current_year }} RoadSafe. Built for safer streets.</div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+    {% block js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+RoadSafe | Profile
+{% endblock %}
+
+
+{% block content %}
+
+<section class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            {{ user.name[0]|upper if user and user.name else "U" }}
+        </div>
+
+
+        <h1>
+            {{ user.name if user else "User" }}
+        </h1>
+
+        <p>
+            {{ user.email if user else "" }}
+        </p>
+
+
+        <div class="profile-info">
+
+            <div>
+                <span>Username</span>
+                <strong>
+                    {{ user.username if user else "-" }}
+                </strong>
+            </div>
+
+
+            <div>
+                <span>Email</span>
+                <strong>
+                    {{ user.email if user else "-" }}
+                </strong>
+            </div>
+
+
+            <div>
+                <span>Reports</span>
+                <strong>
+                    {{ reports|length if reports else 0 }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('report') }}"
+            class="btn btn-primary"
+        >
+            Report New Issue
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
